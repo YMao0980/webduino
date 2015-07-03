@@ -44,7 +44,7 @@
     background-color: #f7f7f7;
     padding: 0 10px 20px 10px;
     border: 1px dotted #CCC;
-    width: 270px;
+    width: 400px;
     margin-top: 20px;
   }
   </style>
@@ -60,11 +60,13 @@
     <input type="text" id="device">
     <button class="setting" id="set">設定</button>
   </form>
+  <label>millisecond : </label><input type="number" id="sec">
   <div class="container">
     <p>Use the buttons below to switch the LED to on or off.</p>
     <button id='on' class="btns" type="button">ON</button>
     <button id='off' class="btns" type="button">OFF</button>
     <button id='toggle' class="btns" type="button">TOGGLE</button>
+    <button id='blink' class="btns" type="button">BLINK</button>	
   </div>
   <p>led pin : 10</p>
   <p>控制 LED</p>
@@ -79,6 +81,8 @@
       onBtn = document.getElementById('on'),
       offBtn = document.getElementById('off'),
       toggleBtn = document.getElementById('toggle'),
+      blinkBtn = document.getElementById('blink'),
+      sec = document.getElementById('sec'), 
       ledstatus = document.getElementById('ledstatus');
 
     device.setAttribute('value', localStorage.device || "");
@@ -105,7 +109,7 @@
     function run() {
       onBtn.addEventListener('click', function(e) {
         led.on();
-        ledstatus.innerHTML = "led on!";
+        ledstatus.innerHTML = "led on!" +'led state : ' +led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -113,7 +117,7 @@
 
       offBtn.addEventListener('click', function(e) {
         led.off();
-        ledstatus.innerHTML = "led off!";
+        ledstatus.innerHTML = "led off!"+'led state : ' +led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -121,7 +125,15 @@
 
       toggleBtn.addEventListener('click', function(e) {
         led.toggle();
-        ledstatus.innerHTML = "led toggle!";
+        ledstatus.innerHTML = "led toggle!"+'led state : ' +led.state;
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }, false);
+
+      blinkBtn.addEventListener('click', function(e) {
+        led.blink(sec.value);
+        ledstatus.innerHTML = "led blink!"+'led state : ' +led.state;
         e.stopPropagation();
         e.preventDefault();
         return false;

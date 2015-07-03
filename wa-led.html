@@ -69,21 +69,41 @@
 
     proto.on = function() {
       this.led.on();
+      this.state = 'on';
     };
 
     proto.off = function() {
       this.led.off();
+      this.state = 'off';
     };
 
     proto.toggle = function() {
       this.led.toggle();
+      this.state === 'off' ? this.state = 'on' : this.state = 'off';	
     };
+
+    proto.blink = function(para) {
+      this.led.blink(para);
+      this.state = 'blink';
+    };	
 
     proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
       if (this.led) {
         switch (attrName) {
           case 'state':
-            newVal === "on" ? this.on() : this.off();
+            if (newVal !== oldVal) {
+              switch (newVal) {
+                case 'on':
+                this.on();
+                break;
+                case 'off':
+                this.off();
+                break;
+                case 'blink':
+                this.blink();
+                break;
+              }
+            }
             break;
           case 'gnd':
             this.createGnd_();
