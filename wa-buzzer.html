@@ -75,6 +75,18 @@
       }
     };
 
+    proto.stop = function() {
+      this.buzzer.stop();
+    };
+
+    proto.pause = function() {
+      this.buzzer.pause();	
+    };
+
+    proto.resume = function() {
+      this.buzzer.resume();	
+    };	
+
     proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
       if (this.buzzer && this.autoplay !== null) {
         this.play();

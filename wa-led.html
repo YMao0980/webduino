@@ -67,19 +67,19 @@
       }
     };
 
-    proto.on = function() {
-      this.led.on();
-      this.state = 'on';
+    proto.on = function(callback) {
+      this.led.on(callback);
+      this.state = 'on';	
     };
 
-    proto.off = function() {
-      this.led.off();
+    proto.off = function(callback) {
+      this.led.off(callback);
       this.state = 'off';
     };
 
-    proto.toggle = function() {
-      this.led.toggle();
-      this.state === 'off' ? this.state = 'on' : this.state = 'off';	
+    proto.toggle = function(callback) {
+      this.led.toggle(callback);
+      this.state === 'off' ? this.state = 'on' : this.state = 'off';
     };
 
     proto.blink = function(para) {

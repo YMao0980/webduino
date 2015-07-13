@@ -8,9 +8,46 @@
 </head>
 
 <body>
-  <web-arduino id='board' device='wahaha'>
-    <wa-buzzer id='buzzer' pin='11' notes='E5,E5,REST,E5,REST,C5,E5,REST,G5' tempos='8,8,8,8,8,8,8,8,8' autoplay></wa-buzzer>
+  <p>Use the buttons below to switch the BUZZER to PLAY or STOP.</p>
+    <button id='play' class="btns" type="button">PLAY</button>
+    <button id='pause' class="btns" type="button">PAUSE</button>
+    <button id='stop' class="btns" type="button">STOP</button>
+    <button id='resume' class="btns" type="button">RESUME</button>
+  <web-arduino id='board' device='35N1'>
+    <wa-buzzer id='buzzer' pin='11' notes='E5,E5,REST,E5,REST,C5,E5,REST,G5,E5,E5,REST,E5,REST,C5,E5,REST,G5' tempos='8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8' ></wa-buzzer>
   </web-arduino>
 </body>
 
 </html>
+<script>
+window.addEventListener('WebComponentsReady', function () {
+  var board = document.getElementById('board'),
+	play = document.getElementById('play'),
+	pause = document.getElementById('pause'),
+	stop = document.getElementById('stop'),
+	resume = document.getElementById('resume');
+
+  board.on('ready',function ready() {
+    var  buzzer = document.getElementById('buzzer');
+
+
+    play.addEventListener('click', function(){
+      buzzer.play();
+    });
+
+    pause.addEventListener('click', function(){
+      buzzer.pause();
+    });
+
+
+    stop.addEventListener('click', function(){
+      buzzer.stop();	
+    });	
+    resume.addEventListener('click', function(){
+      buzzer.resume();	
+    });	
+
+  }); 
+
+}, false);
+</script>
