@@ -68,23 +68,22 @@
     };
 
     proto.on = function(callback) {
-      this.led.on(callback);
-      this.state = 'on';	
+      this.led.on(callback);	
     };
 
     proto.off = function(callback) {
       this.led.off(callback);
-      this.state = 'off';
     };
 
     proto.toggle = function(callback) {
       this.led.toggle(callback);
-      this.state === 'off' ? this.state = 'on' : this.state = 'off';
     };
 
-    proto.blink = function(para) {
-      this.led.blink(para);
-      this.state = 'blink';
+    proto.blink = function(para,callback) {
+      this.led.blink(para,callback);
+    };
+    proto.stopblink = function(callback) {
+      this.led.stopblink(callback);
     };	
 
     proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
