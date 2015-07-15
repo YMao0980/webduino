@@ -45,7 +45,7 @@
     proto.init_ = function(board) {
       var observer, config,
         Led = webduino.module.Led;
-
+      var bling;	
       this.led = new Led(board, board.getDigitalPin(this.pin));
 
       if (this.state === 'on') {
@@ -69,21 +69,41 @@
 
     proto.on = function(callback) {
       this.led.on(callback);	
+      this.state = 'on';
+    };
+    proto._on = function(callback) {
+      this.led.on(callback);	
     };
 
     proto.off = function(callback) {
       this.led.off(callback);
+      this.state = 'off';
+    };
+    proto._off = function(callback) {
+      this.led.off(callback);
     };
 
     proto.toggle = function(callback) {
-      this.led.toggle(callback);
+      if(this.state == 'blink'){
+          this.state = 'off';
+      }else{
+          this.state == 'off' ? this.state = 'on':this.state = 'off';
+      }		
     };
 
     proto.blink = function(para,callback) {
       this.led.blink(para,callback);
+      this.bling = true;
+      this.state = 'blink';
+      
+    };
+
+    proto._blink = function() {
+      this.led.blink();
     };
     proto.stopblink = function(callback) {
       this.led.stopblink(callback);
+      this.state = 'off';
     };	
 
     proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
@@ -93,13 +113,13 @@
             if (newVal !== oldVal) {
               switch (newVal) {
                 case 'on':
-                this.on();
+                this._on();
                 break;
                 case 'off':
-                this.off();
+                this._off();
                 break;
                 case 'blink':
-                this.blink();
+                this.bling ? this.bling = false:this._blink();
                 break;
               }
             }
